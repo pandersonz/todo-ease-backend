@@ -1,9 +1,14 @@
 const TaskData = require("../task/task.data.js");
-const { getProjectTasks, createTask } = require("../task/task.controller.js");
+const {
+  getProjectTasks,
+  createTask,
+  updateTask,
+} = require("../task/task.controller.js");
 jest.mock("../task/task.data.js", () => ({
   getProjectTasks: jest.fn(),
   createTask: jest.fn(),
   getCountProjectTasks: jest.fn(),
+  updateTask: jest.fn(),
 }));
 
 describe("Tasks controller test", () => {
@@ -71,6 +76,22 @@ describe("Tasks controller test", () => {
     const req = mockRequest({ body: newTask, user: decodedToken });
     const res = mockResponse();
     await createTask(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
+
+  TaskData.updateTask.mockResolvedValue({ affectedRows: 1 });
+
+  it("it should update a task", async () => {
+    const updatedTask = {
+      id: 1,
+      name: "Updated Task",
+      description: "Updated Task Description",
+    };
+
+    const req = mockRequest({ body: updatedTask });
+    const res = mockResponse();
+    await updateTask(req, res);
 
     expect(res.status).toHaveBeenCalledWith(200);
   });

@@ -22,6 +22,15 @@ class TaskStore {
       return false;
     }
   };
+
+  static updateTask = async (data) => {
+    try {
+      const resp = await TaskData.updateTask(data);
+      return resp;
+    } catch (e) {
+      return false;
+    }
+  };
 }
 
 module.exports = TaskStore;
