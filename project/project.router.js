@@ -1,6 +1,6 @@
 "use strict";
 const { Router } = require("express");
-const { getProjects } = require("./project.controller.js");
+const { getProjects, createProject } = require("./project.controller.js");
 const { withToken } = require("../middleware/withToken");
 
 //---------------------------------------------------
@@ -9,5 +9,6 @@ const { withToken } = require("../middleware/withToken");
 
 const ProjectRouter = Router();
 ProjectRouter.get("/all", withToken, getProjects);
+ProjectRouter.post("/create", withToken, createProject);
 
 module.exports = ProjectRouter;

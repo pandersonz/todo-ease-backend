@@ -39,4 +39,30 @@ describe("Project controller test", () => {
       ],
     });
   });
+
+  ProjectData.createProject.mockResolvedValue({ insertId: 1 });
+  ProjectData.assignProject.mockResolvedValue({ insertId: 1 });
+
+  it("it should create a project", async () => {
+    const decodedToken = {
+      id: 1,
+      firstname: "John",
+      lastname: "Doe",
+      email: "john.doe@example.com",
+    };
+
+    const newProject = {
+      name: "New Project",
+      description: "New Project Description",
+      code: "NP123",
+      startAt: "2024-01-01",
+      endAt: "2024-12-31",
+    };
+
+    const req = mockRequest({ user: decodedToken, body: newProject });
+    const res = mockResponse();
+    await createProject(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
 });
