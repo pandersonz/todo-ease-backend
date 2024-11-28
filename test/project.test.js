@@ -65,4 +65,26 @@ describe("Project controller test", () => {
 
     expect(res.status).toHaveBeenCalledWith(200);
   });
+
+  it("it should assign a project", async () => {
+    const decodedToken = {
+      id: 1,
+      firstname: "John",
+      lastname: "Doe",
+      email: "john.doe@example.com",
+    };
+
+    const assignData = {
+      userId: 1,
+      projectId: 1,
+      isOwner: 1,
+      enabled: 1,
+    };
+
+    const req = mockRequest({ user: decodedToken, body: assignData });
+    const res = mockResponse();
+    await assignProject(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
 });

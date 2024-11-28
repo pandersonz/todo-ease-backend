@@ -29,6 +29,27 @@ class ProjectStore {
       return false;
     }
   };
+
+  static assignProject = async (data) => {
+    try {
+      const resp = await ProjectData.assignProject(data);
+      return resp;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  static validateAssignProject = async (data) => {
+    try {
+      const resp = await ProjectData.validateAssignProject(data);
+      if (resp.length > 0) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  };
 }
 
 module.exports = ProjectStore;
