@@ -9,6 +9,26 @@ class ProjectStore {
       return false;
     }
   };
+
+  static createProject = async (data, id) => {
+    try {
+      const resp = await ProjectData.createProject(data);
+      if (resp) {
+        const assignResp = await ProjectData.assignProject({
+          userId: id,
+          isOwner: 1,
+          enabled: 1,
+          projectId: resp.insertId,
+        });
+        if (!assignResp) {
+          return false;
+        }
+      }
+      return resp;
+    } catch (e) {
+      return false;
+    }
+  };
 }
 
 module.exports = ProjectStore;

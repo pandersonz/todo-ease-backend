@@ -12,6 +12,30 @@ class ProjectData {
       console.log(err);
     }
   };
+
+  static createProject = async (data) => {
+    try {
+      const resp = await runQuery(
+        "insert into Project values (0,?,?,?,?,?,NOW(),null)",
+        [data.name, data.description, data.code, data.startAt, data.endAt]
+      );
+      return resp;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  static assignProject = async (data) => {
+    try {
+      const resp = await runQuery(
+        "insert into UserProject values (0,?,?,?,?,NOW(),null)",
+        [data.isOwner, data.enabled, data.userId, data.projectId]
+      );
+      return resp;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 }
 
 module.exports = ProjectData;
