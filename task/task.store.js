@@ -9,6 +9,19 @@ class TaskStore {
       return false;
     }
   };
+
+  static createTask = async (data) => {
+    try {
+      const project = await TaskData.getCountProjectTasks(data.projectId);
+      if (project) {
+        const resp = await TaskData.createTask({ ...data, ...project });
+        return resp;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  };
 }
 
 module.exports = TaskStore;

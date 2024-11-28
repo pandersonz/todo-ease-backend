@@ -12,6 +12,42 @@ class TaskData {
       console.log(err);
     }
   };
+
+  static createTask = async (data) => {
+    try {
+      const resp = await runQuery(
+        "insert into Task values (0,?,?,?,?,?,?,?,?,?,?,?,NOW(),null)",
+        [
+          data.name,
+          data.description,
+          `${data.projectCode}-${data.taskCount + 1}`,
+          data.taskPriorityId,
+          data.taskStatusId,
+          data.estimate,
+          data.startAt,
+          data.endAt,
+          data.projectId,
+          data.reporterUserId,
+          data.assignedUserId,
+        ]
+      );
+      return resp;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  static getCountProjectTasks = async (projectId) => {
+    try {
+      const resp = await runQuery(
+        "SELECT COALESCE(COUNT(t.id), 0) AS taskCount, p.code AS projectCode FROM Project p LEFT JOIN Task t ON t.projectId = p.id  WHERE p.id = ? GROUP BY p.code;",
+        [projectId]
+      );
+      return resp[0];
+    } catch (err) {
+      console.log(err);
+    }
+  };
 }
 
 module.exports = TaskData;
