@@ -1,6 +1,7 @@
 "use strict";
 const { Router } = require("express");
 const {
+  getTasks,
   getProjectTasks,
   createTask,
   updateTask,
@@ -11,6 +12,7 @@ const { withToken } = require("../middleware/withToken");
 //---------------------------------------------------
 
 const TaskRouter = Router();
+TaskRouter.get("/all", withToken, getTasks);
 TaskRouter.get("/project/:projectId", withToken, getProjectTasks);
 TaskRouter.post("/create", withToken, createTask);
 TaskRouter.post("/update", withToken, updateTask);

@@ -1,10 +1,12 @@
 const TaskData = require("../task/task.data.js");
 const {
+  getTasks,
   getProjectTasks,
   createTask,
   updateTask,
 } = require("../task/task.controller.js");
 jest.mock("../task/task.data.js", () => ({
+  getTasks: jest.fn(),
   getProjectTasks: jest.fn(),
   createTask: jest.fn(),
   getCountProjectTasks: jest.fn(),
@@ -19,6 +21,35 @@ describe("Tasks controller test", () => {
     res.send = jest.fn().mockReturnValue(res);
     return res;
   };
+
+  TaskData.getTasks.mockResolvedValue([
+    { id: 1, name: "Task 1", description: "Description of Task 1" },
+    { id: 2, name: "Task 2", description: "Description of Task 2" },
+  ]);
+
+  it("it should get all tasks", async () => {
+    const decodedToken = {
+      id: 1,
+      firstname: "John",
+      lastname: "Doe",
+      email: "john.doe@example.com",
+    };
+
+    const req = mockRequest({ user: decodedToken });
+    const res = mockResponse();
+    await getTasks(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.send).toHaveBeenCalledWith({
+      code: "SUCCESS",
+      message: "get was succesful",
+      body: [
+        { id: 1, name: "Task 1", description: "Description of Task 1" },
+        { id: 2, name: "Task 2", description: "Description of Task 2" },
+      ],
+    });
+  });
+
   TaskData.getProjectTasks.mockResolvedValue([
     {
       id: 1,
