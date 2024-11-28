@@ -9,6 +9,7 @@ const http = require("http");
 
 const authenticationRouter = require("./authentication/authentication.router.js");
 const userRouter = require("./user/user.router.js");
+const projectRouter = require("./project/project.router.js");
 
 require("dotenv").config();
 
@@ -36,6 +37,7 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use("/authentication", authenticationRouter);
 app.use("/user", userRouter);
+app.use("/project", projectRouter);
 
 module.exports.start = async () => {
   try {
