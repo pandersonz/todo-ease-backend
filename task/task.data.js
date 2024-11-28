@@ -48,6 +48,28 @@ class TaskData {
       console.log(err);
     }
   };
+
+  static updateTask = async (data) => {
+    try {
+      const resp = await runQuery(
+        "update Task set name=?, description=?, taskPriorityId=?, taskStatusId=?, estimate=?, startAt=?, endAt=?, assignedUserId=?, updatedAt=NOW() where id=?",
+        [
+          data.name,
+          data.description,
+          data.taskPriorityId,
+          data.taskStatusId,
+          data.estimate,
+          data.startAt,
+          data.endAt,
+          data.assignedUserId,
+          data.id,
+        ]
+      );
+      return resp;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 }
 
 module.exports = TaskData;
