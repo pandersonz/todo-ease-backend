@@ -36,6 +36,18 @@ class ProjectData {
       console.log(err);
     }
   };
+
+  static validateAssignProject = async (data) => {
+    try {
+      const resp = await runQuery(
+        "select id from UserProject where userId=? and projectId=?",
+        [data.userId, data.projectId]
+      );
+      return resp;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 }
 
 module.exports = ProjectData;
