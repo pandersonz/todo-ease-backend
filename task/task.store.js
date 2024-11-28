@@ -1,6 +1,15 @@
 const TaskData = require("./task.data.js");
 
 class TaskStore {
+  static getTasks = async (userId) => {
+    try {
+      const resp = await TaskData.getTasks(userId);
+      return resp;
+    } catch (e) {
+      return false;
+    }
+  };
+
   static getProjectTasks = async (userId, projectId) => {
     try {
       const resp = await TaskData.getProjectTasks(userId, projectId);
